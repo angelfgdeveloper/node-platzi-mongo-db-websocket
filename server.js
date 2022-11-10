@@ -12,11 +12,15 @@ const app = express();
 app.use(router);
 
 router.get('/message', (req = request, res = response) => {
-  res.send('Hola!');
+  res.send('Lista de mensajes');
 });
 
 router.post('/message', (req = request, res = response) => {
-  res.send('Hola desde post!');
+  res.send('Mensaje añadido!');
+});
+
+router.delete('/message/:id', (req = request, res = response) => {
+  res.send('Mensaje eliminado');
 });
 
 
