@@ -1,9 +1,9 @@
 const { request, response } = require('express');
 
-const success = (req = request, res = response, message, status) => {
+const success = (req = request, res = response, body, status) => {
   res.status(status || 200).json({
     error: '',
-    body: message
+    body
   });
 }
 

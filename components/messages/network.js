@@ -2,25 +2,33 @@ const express = require('express');
 
 const { request, response } = require('express');
 
+const controller = require('./controller');
 const { success, error } = require('../../network/response');
 
 const router = express.Router();
 
-router.get('/', (req = request, res = response) => {
-  res.header({
-    'custom-header': 'Nuestro valor personalizado'
-  });
+router.get('/', async(req = request, res = response) => {
 
-  success(req, res, 'Lista de mensajes');
+  try {
+    const rta = await controller.getMessages();
+    success(req, res, rta, 201);
+  } catch(err) {
+    error(req, res, 'Unexpected Error', 500, err);
+  }
+
 });
 
-router.post('/', (req = request, res = response) => {
-  if (req.query.error == 'ok') {
-    error(req, res, 'Error inesperado', 500, 'Es solo una simulación de los errores');
-  } else {
-    success(req, res, 'Mensaje creado correctamente');
+router.post('/', async(req = request, res = response) => {
+  const { user, message } = req.body;
+
+  try {
+    const rta = await controller.addMessage(user, message);
+    // success(req, res, { ...rta, message: 'Mensaje creado correctamente' }, 201);
+    success(req, res, rta, 201);
+  } catch(err) {
+    error(req, res, 'Información invalida', 400, err);
   }
-  
+
 });
 
 router.delete('/', (req = request, res = response) => {
