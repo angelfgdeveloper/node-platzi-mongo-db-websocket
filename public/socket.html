@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conexión de socket.io</title>
+
+  <!-- Configuracion previa para socket.io -->
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <h1>Uso de Socket.io</h1>
+  <h3>Ve la consola</h3>
+
+  <script>
+    // Conexion de cliente a servidor (socket.io)
+    const socket = io.connect('http://localhost:3000', {
+      forceNew: true
+    });
+
+    // Obtener respuesta de de servidor
+    socket.on('message', (data) => {
+      console.log(data);
+    });
+
+  </script>
+
+</body>
+
+</html>

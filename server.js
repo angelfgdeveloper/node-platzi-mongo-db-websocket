@@ -3,12 +3,18 @@ const express = require('express');
 const cors = require('cors');
 // const bodyParser = require('body-parser');
 
+const app = express();
+
+// configurando socket.io
+const server = require('http').Server(app);
+const socket = require('./socket');
+socket.connect(server);
+
 const db = require('./config/db');
 db(process.env.CNN_MONGO_DB);
 
 // const router = require('./components/messages/network');
 const routes = require('./network/routes');
-const app = express();
 
 app.use(cors());
 
@@ -19,6 +25,6 @@ routes(app);
 
 app.use('/app', express.static('public'));
 
-app.listen(3000, () => {
-  console.log(`Aplicacion en puerto 3000`);
+server.listen(3000, () => {
+  console.log(`Aplicacion en puerto http://localhost:3000`);
 });
