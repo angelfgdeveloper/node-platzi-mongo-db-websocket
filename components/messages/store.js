@@ -15,7 +15,7 @@ const getMessages = async(filterUser) => {
     filter = { user: filterUser };
   }
 
-  return await Message.find(filter);
+  return await Message.find(filter).populate('user');
 }
 
 // const updateText = async(id, message) => {

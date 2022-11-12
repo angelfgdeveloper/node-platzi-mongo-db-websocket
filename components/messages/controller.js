@@ -1,18 +1,25 @@
 const store = require('./store');
 
-const addMessage = (user, message) => {
+const addMessage = (chat, user, message, file) => {
   return new Promise((resolve, reject) => {
 
-    if (!user || !message) {
-      console.error('[messageController] No hay usuario o mensaje');
-      reject('Datos incorrectos');
+    if (!chat || !user || !message) {
+      console.error('[messageController] No hay chat, usuario o mensaje');
+      reject('Datos son incorrectos');
       return false;
     }
 
+    let fileUrl = '';
+    if (file) {
+      fileUrl = 'http://localhost:3000/app/files/' + file.filename
+    }
+
     const fullMessage = {
+      chat,
       user,
       message,
       date: new Date(),
+      file: fileUrl,
     }
 
     store.add(fullMessage);

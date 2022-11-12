@@ -1,12 +1,20 @@
 const { Schema, model } = require('mongoose');
 
 const MessageSchema = Schema({
-  user: String,
+  chat: {
+    type: Schema.ObjectId,
+    ref: 'Chat'
+  },
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
   message: {
     type: String,
     required: true,
   },
-  date: Date
+  date: Date,
+  file: String
 });
 
 MessageSchema.method('toJSON', function() {

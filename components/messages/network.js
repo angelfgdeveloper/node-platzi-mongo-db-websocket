@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 
 const { request, response } = require('express');
 
@@ -6,6 +7,10 @@ const controller = require('./controller');
 const { success, error } = require('../../network/response');
 
 const router = express.Router();
+
+const upload = multer({
+  dest: 'public/files/',
+});
 
 router.get('/', async(req = request, res = response) => {
   const filterUser = req.query.user || null;
@@ -19,11 +24,11 @@ router.get('/', async(req = request, res = response) => {
 
 });
 
-router.post('/', async(req = request, res = response) => {
-  const { user, message } = req.body;
+router.post('/', upload.single('file'), async(req = request, res = response) => {
+  const { chat, user, message } = req.body;
 
   try {
-    const rta = await controller.addMessage(user, message);
+    const rta = await controller.addMessage(chat, user, message, req.file);
     // success(req, res, { ...rta, message: 'Mensaje creado correctamente' }, 201);
     success(req, res, rta, 201);
   } catch(err) {
