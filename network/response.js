@@ -1,6 +1,23 @@
 const { request, response } = require('express');
 
+const statusMessage = {
+  '200': 'Done',
+  '201': 'Created',
+  '400': 'Invalid Format',
+  '500': 'Internal Error'
+}
+
 const success = (req = request, res = response, body, status) => {
+  // let statusCode = status;
+  // let statusMessage = body
+  // if (!status) {
+  //   status = 200;
+  // }
+
+  // if (!body) {
+  //   statusMessage = statusMessage[status];
+  // }
+
   res.status(status || 200).json({
     error: '',
     body
